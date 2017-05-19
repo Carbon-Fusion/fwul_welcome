@@ -30,38 +30,43 @@ CKSPLASH="$HOME/.fwul-splash"
 
 [ -f "$CKSPLASH" ] && exit
 
-WELCTXT="<span font='18'>\nWelcome to FWUL <b>$(cat /etc/fwul-release)</b></span>\n\nThe goal of this project is to provide an easy and stressless access to your favorite Android device\n\n(sorry but FWUL is <b>no</b> Android development tool)\n"
+WELCTXT="<span font='18'>\nWelcome to FWUL <b>$(cat /etc/fwul-release)</b></span>\n\nThe goal of this project is to provide an easy and stressless access to your favorite Android device\n\n(sorry but FWUL is <b>no</b> Android development tool)\n\n\n"
 
 ARCH=$(uname -m)
 if [ $ARCH == "i686" ];then
-    WELCTXT="$WELCTXT\n\n<span foreground='red'><b>YOU ARE USING 32bit HARDWARE!</b>\nKeep in mind that FWUL provides limited support for 32bit only (e.g. some tools like JOdin are missing here)</span>\n"
+    WELCTXT="$WELCTXT\n\n<span foreground='red'><b>YOU ARE USING 32bit HARDWARE!</b>\nKeep in mind that FWUL provides limited support for 32bit only (e.g. some tools like JOdin are missing here)</span>\n\n"
 fi
 
-YRET=$(yad --title "Welcome to FWUL" --center --width=800 --undecorated --skip-taskbar --always-print-result \
-    --close-on-unfocus \
-    --item-separator="|" \
+YRET=$(yad --title "Welcome to FWUL" --undecorated --skip-taskbar --height=650 --center --width=700 \
+    --button="Disable Welcome Screen (for persistent mode only)":11 \
     --button=Close:99 \
-    --text "$WELCTXT" \
-    --text-align=center --form \
-    --field="   <b>FAQ</b>                                     |$ICONPATH/faq.png:FBTN" \
-    --field="   <b>Support</b>                               |$ICONPATH/support.png:FBTN" \
-    --field="   <b>Bug/Feature Request</b>          |$ICONPATH/issues.png:FBTN" \
-    --field="   <b>Install FWUL</b>                        |$ICONPATH/install.png:FBTN" \
-    --field="   <b>FWUL Project</b>                      |$ICONPATH/website.png:FBTN" \
-    --field="   <b>Build FWUL / Sources</b>        |$ICONPATH/build.png:FBTN" \
-    --field="Show screen on startup (setting will work for persistent mode only):CHK"\
-    "xdg-open https://forum.xda-developers.com/showpost.php?p=70272692&postcount=4"\
-    "xdg-open http://webchat.freenode.net/?channels=Carbon-user" \
-    "xdg-open https://github.com/Carbon-Fusion/build_fwul/issues/new" \
-    "yad --title SORRY --center --text '\nSorry this is not ready yet.\nCheck the FWUL Project page for details and process.'" \
-    "xdg-open https://tinyurl.com/FWULatXDA" \
-    "xdg-open https://github.com/Carbon-Fusion/build_fwul" \
-    TRUE)
+    --buttons-layout="edge" \
+    --no-escape \
+    --text "$WELCTXT\n- double-click an entry to open -" --text-align=center \
+    --list --grid-lines=hor --no-headers --print-column=3 \
+    --column="icon:IMG" --column="what:TXT" --column="parse:HD" \
+    "$ICONPATH/faq.png" "<b>FAQ</b>" faq\
+    "$ICONPATH/support.png" "<b>Support</b>" support \
+    "$ICONPATH/issues.png" "<b>Bug/Feature Request</b>" issue \
+    "$ICONPATH/website.png" "<b>FWUL Project</b>" web \
+    "$ICONPATH/build.png" "<b>Build FWUL / Sources</b>" sources)
 
-SPLASH=$(echo ${YRET}|cut -d '|' -f 7)
-
-# add indicator for persistent install to not show splash again
-if [ "$SPLASH" == "FALSE" ];then
+# disable welcome screen on next boot
+if [ $? -eq 11 ];then
     date > $CKSPLASH
+    exit
 fi
 
+# parse selection
+SELECT="${YRET/|/}"
+
+# act based on selection
+case "$SELECT" in
+    faq) xdg-open "https://forum.xda-developers.com/showpost.php?p=70272692&postcount=4" ;;
+    support) xdg-open "http://webchat.freenode.net/?channels=Carbon-user" ;;
+    issue) xdg-open "https://github.com/Carbon-Fusion/build_fwul/issues/new" ;;
+    install) yad --title SORRY --center --text '\nSorry this is not ready yet.\nCheck the FWUL Project page for details and process.' ;;
+    web) xdg-open "https://tinyurl.com/FWULatXDA";;
+    sources) xdg-open "https://github.com/Carbon-Fusion/build_fwul";;
+    *)  echo "ERROR: $YRET";;
+esac
