@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Comment=FWUL Welcome Screen
+Terminal=false
+Name=Welcome
+Exec=/home/$LOGINUSR/programs/welcome/welcome.sh
+Icon=/home/$LOGINUSR/programs/welcome/icons/welcome.png
