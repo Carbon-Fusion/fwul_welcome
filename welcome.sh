@@ -26,10 +26,19 @@ set -o nounset                              # Treat unset variables as an error
 # find and save the path where executed
 EXDIR=${0%/*}
 ICONPATH="$EXDIR/icons"
+CKSPLASH="$HOME/.fwul-splash"
+
+[ -f "$CKSPLASH" ] && exit
 
 WELCTXT="<span font='18'>\nWelcome to FWUL <b>$(cat /etc/fwul-release)</b></span>\n\nThe goal of this project is to provide an easy and stressless access to your favorite Android device\n\n(sorry but FWUL is <b>no</b> Android development tool)\n"
 
-yad --title "Welcome to FWUL" --center --width=800 --undecorated --skip-taskbar --always-print-result --close-on-unfocus \
+ARCH=$(uname -m)
+if [ $ARCH == "i686" ];then
+    WELCTXT="$WELCTXT\n\n<span foreground='red'><b>YOU ARE USING 32bit HARDWARE!</b>\nKeep in mind that FWUL provides limited support for 32bit only (e.g. some tools like JOdin are missing here)</span>\n"
+fi
+
+YRET=$(yad --title "Welcome to FWUL" --center --width=800 --undecorated --skip-taskbar --always-print-result \
+    --close-on-unfocus \
     --item-separator="|" \
     --button=Close:99 \
     --text "$WELCTXT" \
@@ -40,12 +49,19 @@ yad --title "Welcome to FWUL" --center --width=800 --undecorated --skip-taskbar 
     --field="   <b>Install FWUL</b>                        |$ICONPATH/install.png:FBTN" \
     --field="   <b>FWUL Project</b>                      |$ICONPATH/website.png:FBTN" \
     --field="   <b>Build FWUL / Sources</b>        |$ICONPATH/build.png:FBTN" \
-    --field="Show screen on startup:CHK"\
+    --field="Show screen on startup (setting will work for persistent mode only):CHK"\
     "xdg-open https://forum.xda-developers.com/showpost.php?p=70272692&postcount=4"\
     "xdg-open http://webchat.freenode.net/?channels=Carbon-user" \
     "xdg-open https://github.com/Carbon-Fusion/build_fwul/issues/new" \
     "yad --title SORRY --center --text '\nSorry this is not ready yet.\nCheck the FWUL Project page for details and process.'" \
     "xdg-open https://tinyurl.com/FWULatXDA" \
     "xdg-open https://github.com/Carbon-Fusion/build_fwul" \
-    TRUE
+    TRUE)
+
+SPLASH=$(echo ${YRET}|cut -d '|' -f 7)
+
+# add indicator for persistent install to not show splash again
+if [ "$SPLASH" == "FALSE" ];then
+    date > $CKSPLASH
+fi
 
