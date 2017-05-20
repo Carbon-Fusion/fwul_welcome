@@ -30,11 +30,11 @@ CKSPLASH="$HOME/.fwul-splash"
 
 [ -f "$CKSPLASH" ] && exit
 
-WELCTXT="<span font='18'>\nWelcome to FWUL <b>$(cat /etc/fwul-release)</b></span>\n\nThe goal of this project is to provide an easy and stressless access to your favorite Android device\n\n(sorry but FWUL is <b>no</b> Android development tool)\n\n\n"
+WELCTXT="<span font='18'>\nWelcome to\nFWUL <b>$(cat /etc/fwul-release)</b></span>\n[F]orget [W]indows [U]se [L]inux\n\n"
 
 ARCH=$(uname -m)
 if [ $ARCH == "i686" ];then
-    WELCTXT="$WELCTXT\n\n<span foreground='red'><b>YOU ARE USING 32bit HARDWARE!</b>\nKeep in mind that FWUL provides limited support for 32bit only (e.g. some tools like JOdin are missing here)</span>\n\n"
+    WELCTXT="$WELCTXT<span foreground='red'><b>YOU ARE USING 32bit HARDWARE!</b>\nKeep in mind that FWUL provides limited support for 32bit only\n(e.g. some tools like JOdin are missing here)</span>\n\n"
 fi
 
 YRET=$(yad --title "Welcome to FWUL" --undecorated --skip-taskbar --height=650 --center --width=700 \
