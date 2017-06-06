@@ -48,7 +48,7 @@ YRET=$(yad --title "Welcome to FWUL" --undecorated --skip-taskbar --height=650 -
     "$ICONPATH/faq.png" "<b>FAQ</b>" faq\
     "$ICONPATH/support.png" "<b>Support</b>" support \
     "$ICONPATH/issues.png" "<b>Bug/Feature Request</b>" issue \
-    "$ICONPATH/website.png" "<b>FWUL Project</b>" web \
+    "$ICONPATH/website.png" "<b>Project page</b>" web \
     "$ICONPATH/build.png" "<b>Build FWUL / Sources</b>" sources)
 
 # disable welcome screen on next boot
