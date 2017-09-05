@@ -30,7 +30,8 @@ CKSPLASH="$HOME/.fwul-splash"
 
 [ -f "$CKSPLASH" ] && exit
 
-WELCTXT="<span font='18'>\nWelcome to\nFWUL <b>$(cat /etc/fwul-release)</b></span>\n\n[F]orget [W]indows [U]se [L]inux\n\n"
+source /etc/fwul-release
+WELCTXT="<span font='18'>\nWelcome to\n\nFWUL <b>$fwulversion</b></span>\n(build: $fwulbuild)\n\n[F]orget [W]indows [U]se [L]inux\n\n"
 
 ARCH=$(uname -m)
 if [ $ARCH == "i686" ];then
