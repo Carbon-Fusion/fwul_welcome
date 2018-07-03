@@ -3,7 +3,7 @@
 #
 # This is FWUL: [F]orget [W]indows [U]se [L]inux
 #
-# Copyright (C) 2017 steadfasterX <steadfastX@boun.cr>
+# Copyright (C) 2017-2018 steadfasterX <steadfastX@boun.cr>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -32,7 +32,7 @@ CKSPLASH="$HOME/.fwul-splash"
 
 source /etc/fwul-release
 [ -z "$patchlevel" ]&& patchlevel=0
-WELCTXT="<span font='18'>\nWelcome to\n\nFWUL <b>$fwulversion</b></span>\n(build: $fwulbuild, patchlevel: $patchlevel)\n\n[F]orget [W]indows [U]se [L]inux\n\n"
+WELCTXT="<span font='18'>\nWelcome to\n\nFWUL <b>$fwulversion</b></span>\n(build: $fwulbuild, patchlevel: $patchlevel, mode: $fwul_Chassis)\n\n[F]orget [W]indows [U]se [L]inux\n\n"
 
 ARCH=$(uname -m)
 if [ $ARCH == "i686" ];then
