@@ -41,19 +41,19 @@ F_FAQ(){
         xdg-open 'https://forum.xda-developers.com/showpost.php?p=70272692&postcount=4'
 }; export -f F_FAQ
 F_SUPPORT(){
-       xdg-open "http://webchat.freenode.net/?channels=Carbonfusion-user"
+       xdg-open "https://bit.do/FWULatXDA"
 }; export -f F_SUPPORT
 F_ISSUE(){
-        xdg-open "https://github.com/Carbon-Fusion/build_fwul/issues/new"
+        xdg-open "https://code.binbash.it:8443/Carbon-Fusion/build_fwul/issues/new"
 }; export -f F_ISSUE
 F_INSTALL(){
         yad --title SORRY --center --text '\nSorry this is not ready yet.\nCheck the FWUL Project page for details and process.'
 }; export -f F_INSTALL
 F_WEB(){
-        xdg-open "https://tinyurl.com/FWULatXDA"
+        xdg-open "https://fwul.binbash.rocks"
 }; export -f F_WEB
 F_SOURCES(){
-        xdg-open "https://github.com/Carbon-Fusion/build_fwul"
+        xdg-open "https://code.binbash.it:8443/Carbon-Fusion/build_fwul"
 }; export -f F_SOURCES
 
 F_CLOSE(){
@@ -65,12 +65,13 @@ YRET=$(yad -on-top --no-escape --title="Welcome to FWUL" --width=1000 --image="$
         --form --field="":LBL true --field=" Disable Welcome Screen (only for persistent build)":CHK false \
         --buttons-layout=spread \
         --button="Close":"bash -c F_CLOSE"\
-        --button="FAQ!$ICONPATH/faq.png!Frequently Asked Questions":"bash -c F_FAQ" \
-        --button="Support!$ICONPATH/support.png!Get immediate support on IRC":"bash -c F_SUPPORT" \
-        --button="Bugs!$ICONPATH/issues.png!File a bug / Request a new feature":"bash -c F_ISSUE" \
-        --button="Forum!$ICONPATH/website.png!Forum / Homepage":"bash -c F_WEB" \
-        --button="Sources!$ICONPATH/build.png!Build your own version of FWUL":"bash -c F_SOURCES" \
+        --button=" FAQ!$ICONPATH/faq.png!Frequently Asked Questions":"bash -c F_FAQ" \
+        --button=" Support!$ICONPATH/support.png!Main discussion thread on XDA":"bash -c F_SUPPORT" \
+        --button=" Open an Issue!$ICONPATH/issues.png!File a bug / Request a new feature":"bash -c F_ISSUE" \
+        --button=" Homepage!$ICONPATH/website.png!Homepage":"bash -c F_WEB" \
+        --button=" Sources!$ICONPATH/build.png!Build your own version of FWUL":"bash -c F_SOURCES" \
         )
+
 # parse selection
 SELECT=$(echo "${YRET}"|cut -d "|" -f2)
 
