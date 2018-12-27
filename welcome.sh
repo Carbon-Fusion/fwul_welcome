@@ -32,8 +32,7 @@ source /etc/fwul-release
 [ -z "$patchlevel" ]&& patchlevel=0
 WELCTXT="<span font='18'>\n   Welcome to\n\n\tFWUL <b>$fwulversion</b></span>\n\t(build: $fwulbuild, patchlevel: $patchlevel, mode: $fwul_Chassis)\n\n"
 
-if [ "$fwul_Chassis" == "vm" ];then
-        WELCTXT="$WELCTXT\t<span font='14' foreground='red'><b>!! Virtualization detected !!</b></span><span foreground='red'>\n\n\twhen doing critical operations (like flashing a ROM/bootloader) do <b><u>not</u> use FWUL from within VirtualBox.</b>\n\n\t(This is not a limitation of FWUL but is generally related to virtualization - <a href='https://github.com/Carbon-Fusion/build_fwul/issues/76'>click here</a> for details)</span>\n"
+if [ "$fwul_Chassis" == "vm" ];then        WELCTXT="$WELCTXT\t<span font='35' foreground='red'><b>!! Virtualization detected !!</b></span><span font='14' foreground='red'>\n\n\twhen doing critical operations (like flashing a ROM/bootloader)\n\tit is <b><u>not</u> recommended to use FWUL from within VirtualBox.</b>\n\n\t(This is not a limitation of FWUL but is generally related to virtualization\n\t - <a href='https://code.binbash.it:8443/Carbon-Fusion/build_fwul/issues/76'>click here</a> for details)</span>\n"
 else
         WELCTXT="$WELCTXT\n\n\n\n\n"
 fi
